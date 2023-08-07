@@ -19,6 +19,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  fl_chart: ^0.55.2
+  location: ^4.4.0
 
 dev_dependencies:
   flutter_test:
