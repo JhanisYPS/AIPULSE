@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:location/location.dart';
 
 void main() {
   runApp(MyApp());
@@ -12,7 +10,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'ECG App',
       theme: ThemeData(
-        primarySwatch: Colors.red,
+        primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: HomePage(),
@@ -48,18 +46,13 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Container(
-              width: 200,
-              height: 100,
-              color: Colors.grey,
-            ),
-            SizedBox(height: 20),
             Text('ECG Signal: $ecgSignal'),
             SizedBox(height: 20),
             Text('BPM: $bpm'),
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
+                // Simulate ECG signal and BPM update
                 setState(() {
                   ecgSignal = "Updated ECG Signal";
                   bpm = 80;
@@ -70,6 +63,7 @@ class _HomePageState extends State<HomePage> {
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
+                // Go to History Page
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => HistoryPage()));
               },
@@ -77,10 +71,12 @@ class _HomePageState extends State<HomePage> {
             ),
             SizedBox(height: 20),
             ElevatedButton(
-              onPressed: () async {
-                bool hasArrhythmia = true;
+              onPressed: () {
+                // Check for arrhythmia and notify emergency if needed
+                bool hasArrhythmia =
+                    true; // Replace with actual arrhythmia check
                 if (hasArrhythmia) {
-                  await _sendEmergencyNotification();
+                  _sendEmergencyNotification();
                 }
               },
               child: Text('Verificar Arritmia'),
@@ -91,24 +87,13 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Future<void> _sendEmergencyNotification() async {
+  void _sendEmergencyNotification() {
+    // Simulate sending emergency notification
     print("Sending emergency notification to 192...");
-
-    Location location = Location();
-    LocationData? currentLocation; // Adição do operador de nulidade
-    try {
-      currentLocation = await location.getLocation();
-    } on PlatformException catch (e) {
-      print("Error obtaining location: ${e.message}");
-    }
-
-    if (currentLocation != null) {
-      String locationText =
-          "Latitude: ${currentLocation.latitude}, Longitude: ${currentLocation.longitude}";
-      String diagnosis = "Sample Diagnosis";
-      print(
-          "Emergency notification sent: Location - $locationText, Diagnosis - $diagnosis");
-    }
+    String location = "Sample Location"; // Replace with actual location
+    String diagnosis = "Sample Diagnosis"; // Replace with actual diagnosis
+    print(
+        "Emergency notification sent: Location - $location, Diagnosis - $diagnosis");
   }
 }
 
